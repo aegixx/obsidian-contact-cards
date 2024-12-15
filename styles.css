@@ -1,8 +1,143 @@
-/*
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.contact-card-error {
+	font-size: 0.9em;
+	color: var(--text-error);
+}
 
-If your plugin does not need CSS, delete this file.
+.contact-card,
+.contact-card-content {
+	display: flex;
+	align-items: center;
+}
 
-*/
+.contact-card-content {
+	font-family: "Open Sans", sans-serif;
+	font-size: 0.8em;
+	overflow: hidden;
+	position: relative;
+	animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+}
+
+.contact-card-content *,
+.contact-card-content *:before,
+.contact-card-content *:after {
+	box-sizing: border-box;
+}
+
+.contact-card {
+	width: 400px;
+	aspect-ratio: 1.75;
+	padding: 15px;
+	border-radius: 3px;
+	background-color: white;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+	position: relative;
+	overflow: hidden;
+	flex-direction: row;
+	border: 0.25px solid silver;
+}
+
+.contact-card:after {
+	content: "";
+	display: block;
+    border-radius: 30%;
+	width: 190px;
+	height: 300px;
+	background: cadetblue;
+	position: absolute;
+	animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
+}
+
+.contact-card-photo {
+	border-radius: 50%;
+	width: 120px;
+	z-index: 1;
+	position: relative;
+}
+.contact-card-logo {
+	border-radius: 5px;
+	height: 40px;
+	position: absolute;
+	top: 60%;
+	left: 10px;
+	background: white;
+	padding: 4px;
+	z-index: 2;
+}
+.contact-card-info {
+    position: relative;
+    z-index: 2;
+	padding: 0px 0px 0px 20px;
+}
+.contact-card-info * {
+	color: #5a5a5a;
+	line-height: 1.2;
+	margin: 5px;
+}
+.contact-card-info svg {
+	margin: 0px;
+	height: 0.75rem;
+}
+.contact-card-name {
+	font-size: 1.8em;
+	margin-bottom: 0px;
+}
+
+.contact-card-title {
+	margin-top: 0px;
+}
+
+.contact-card-separator {
+	line-height: 0.5em;
+}
+.contact-card-hidden {
+	display: none;
+}
+.contact-card-title {
+	font-size: 1.2em;
+	color: #009688;
+	font-style: italic;
+}
+
+.contact-card a {
+	margin: 0px;
+}
+
+.contact-card a:link,
+.contact-card a:visited,
+.contact-card a:active {
+	text-decoration: none;
+}
+
+@keyframes animatop {
+	0% {
+		opacity: 0;
+		bottom: -500px;
+	}
+	100% {
+		opacity: 1;
+		bottom: 0px;
+	}
+}
+@keyframes animainfos {
+	0% {
+		bottom: 10px;
+	}
+	100% {
+		bottom: -42px;
+	}
+}
+@keyframes rotatemagic {
+	0% {
+		opacity: 0;
+		transform: rotate(0deg);
+		top: -24px;
+		left: -253px;
+	}
+	100% {
+		transform: rotate(-30deg);
+		top: -24px;
+		left: -78px;
+	}
+}

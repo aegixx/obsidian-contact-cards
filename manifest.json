@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+    "id": "contact-cards",
+    "name": "Contact Cards",
+    "version": "1.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "Transforms raw data into a beautifully designed contact card for People and Organizations.",
+    "author": "Bryan Stone",
+    "authorUrl": "https://steampunk.dev",
+    "isDesktopOnly": false
 }
