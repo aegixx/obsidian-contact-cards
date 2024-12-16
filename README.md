@@ -14,52 +14,90 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 - **Beautiful Formatting**: Display name, title, company, email, and phone number in a clean, business-card style layout.
 - **Simple Syntax**: Just provide a `contact-card` code block with YAML fields, and the plugin will handle the rest.
 - **Customizable**: Adjust styling by modifying the plugin’s CSS or by creating your own Obsidian CSS snippets.
-- **Powerful Integrations**: Photos automatically populate from Gravatar, Company logos pulled from Brandfetch, and clickable fields for quick access to phone, email, location, LinkedIn and more.
+- **Powerful Integrations**:
+  - Photos automatically populated based on email address
+  - Company logos pulled based on email domain (when Company name is provided)
+  - Clickable fields for more context (phone, email, location, etc)
 
 ## Development
 
-- Clone the repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/obsidian-contact-cards` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
+- Fork the repo & clone to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/obsidian-contact-cards` folder or symlink it!
+- Install dependencies using `npm install`
 - Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
 - Reload Obsidian to load the new version of your plugin.
 - Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
 
 ## Usage
 
-1. **Add a code block** to your note:
+**Add a code block** to your note:
 
-    ```md
-        ```contact-card
-        name: Jane Doe
-        title: Head of Engineering
-        company: Acme Corp
-        email: jane.doe@example.com
-        phone: 555 123 4567
-        ```
-    ```
+```md
+    ```contact-card
+    name: Bryan Stone
+    email: bryan@steampunk.dev
+    company: Steampunk Labs
+    title: Founder & Managing Partner
+    phone: 2565551234
+    location: Madison, AL
+    ```    
+```
 
-2. **View the rendered card** in Reading mode.  
-You’ll see a nicely formatted contact card in place of the code block.
+**View the rendered card** in Reading/Preview mode:
+![Sample Card](sample_card.png)
 
 ## Customization
 
-- **CSS Themes**:  
-The plugin uses Obsidian’s built-in CSS variables. If you are using a custom theme, the card styling should adapt automatically.
-- **Further Customization**:  
-You can add custom CSS in your `Snippets` to change the border, font, colors, or layout of the contact card:
+The `obsidian-contact-cards` plugin allows for several customizable settings to tailor the behavior and design of your contact cards. Below are the available options you can configure:
 
-    ```css
-    .contact-card-container {
-    border: 2px solid #ff0000;
-    background-color: #f2f2f2;
-    }
-    ```
+### Settings
+
+1. **HTML Template**
+   - **Description:** Provide the path to a custom HTML template to be used instead of the default card design. (Syntax follows the TemplaterThe fields should be provided using the Templater syntax (i.e. `{{name}}`).
+   - **Example:**
+
+     ```html
+     <div class="custom-contact-card">
+         <img src="{{photo_url}}" alt="Profile Photo">
+         <h1>{{name}}</h1>
+         <p>{{title}}</p>
+         <a href="mailto:{{email}}">{{email}}</a>
+     </div>
+     ```
+
+2. **Brandfetch Client ID**
+   - **Description:** Company logos are retrieved using the email domain via the Brandfetch API. To use this API, you must register for a Client ID. This service is available free of charge.
+   - **Note:** Register for your free Brandfetch API key [here](https://brandfetch.io/).
+
+3. **Default Country Code**
+   - **Description:** This setting determines the country code used for phone number formatting. Provide the 2-letter country code (e.g., "GB" for the United Kingdom, "IN" for India)
+   - **Default:** "US"
+
+### Styling
+
+The `obsidian-contact-cards` plugin provides several customizable CSS classes to help you personalize the appearance of the business cards. You can override these styles in your own stylesheet to create a custom look and feel. Below are the available classes and their purposes:
+
+#### Available CSS Classes
+
+- **`.contact-card-content`** - The outer container for the card, this is used for layout & sizing.
+- **`.contact-card`** - The inner container that holds the profile image, logo, and contact information.
+- **`.contact-card-photo`** - Profile photo image of the contact.
+- **`.contact-card-logo`** - Company logo displayed on the card.
+- **`.contact-card-info`** - Container for the contact's name, title, company, and other information.
+- **`.contact-card-name`** - The name of the contact.
+- **`.contact-card-title`** - The title/position of the contact.
+- **`.contact-card-separator`** - A separator between sections in the contact info (e.g., between name and company).
+- **`.contact-card-hidden`** - A utility class to hide elements.
+- **`.contact-card-error`** - Applied to elements displaying an error message.
+
+#### Animations
+
+- **`.contact-card-content`** - This class uses the `animatop` animation to slide the background shape into view.
+- **`.contact-card:after`** - This class defines the background shape displayed behind the card.
 
 ## Roadmap
 
-- Support additional contact fields (e.g., address, social media links).
-- Add configuration options to show/hide specific fields.
+- Add support for additional "power" fields with custom functionality (e.g. social media links, skills)
+- Add richer integration for finding a contact's photo
 
 ## Contributing
 
