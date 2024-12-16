@@ -2,12 +2,7 @@
 
 The Obsidian Contact Cards Plugin transforms YAML data inside a special code block into a beautifully designed contact card. This lets you quickly view a person's details (even in preview mode).
 
-## Attribution
-
-- [Profile Card UI](https://codepen.io/genarocolusso/pen/xONEXg) by [Genaro Colusso](https://codepen.io/genarocolusso)
-- Profile photos from [Gravatar](https://gravatar.com/)
-- Company logos from [Brandfetch](https://brandfetch.com)
-- Vector graphics from [SVG Repo](https://www.svgrepo.com)
+![Example](example.gif)
 
 ## Features
 
@@ -19,6 +14,13 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
   - Company logos pulled based on email domain (when Company name is provided)
   - Clickable fields for more context (phone, email, location, etc)
 
+## Attribution
+
+- [Profile Card UI](https://codepen.io/genarocolusso/pen/xONEXg) by [Genaro Colusso](https://codepen.io/genarocolusso)
+- Profile photos from [Gravatar](https://gravatar.com/)
+- Company logos from [Brandfetch](https://brandfetch.com)
+- Vector graphics from [SVG Repo](https://www.svgrepo.com)
+
 ## Development
 
 - Fork the repo & clone to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/obsidian-contact-cards` folder or symlink it!
@@ -27,7 +29,7 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 - Reload Obsidian to load the new version of your plugin.
 - Enable plugin in settings window.
 
-## Usage
+## Example
 
 **Add a code block** to your note:
 
