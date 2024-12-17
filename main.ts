@@ -176,8 +176,8 @@ class ContactCardsSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         new Setting(containerEl)
-            .setName('HTML Template')
-            .setDesc('Provide a template to use for rendering contact cards.')
+            .setName('HTML template file')
+            .setDesc('Provide an HTML template to override the default look of rendered contact cards.')
             .addText(text => text
                 .setPlaceholder('Example: templates/Contact')
                 .setValue(this.plugin.settings.htmlTemplate ?? '')
@@ -187,8 +187,8 @@ class ContactCardsSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Brandfetch Client ID')
-            .setDesc('Provide a Client ID for the Brandfetch API')
+            .setName('Brandfetch client ID')
+            .setDesc('Provide your Brandfetch Client ID for retrieving company logos')
             .addText(text => text
                 .setPlaceholder('Brandfetch Client ID')
                 .setValue(this.plugin.settings.brandfetchClientId ?? '')
@@ -198,7 +198,7 @@ class ContactCardsSettingTab extends PluginSettingTab {
                 }));
 
         new Setting(containerEl)
-            .setName('Default Country Code')
+            .setName('Default country code')
             .setDesc('Specify your country code for phone number formatting.')
             .addText(text => text
                 .setPlaceholder('US')

@@ -1,7 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,400";
 
 .contact-card-error {
-	font-size: 0.9em;
 	color: var(--text-error);
 }
 
@@ -13,7 +12,7 @@
 
 .contact-card-content {
 	font-family: "Open Sans", sans-serif;
-	font-size: 0.8em;
+    color: var(--text-normal);
 	overflow: hidden;
 	position: relative;
 	animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
@@ -29,13 +28,13 @@
 	width: 400px;
 	aspect-ratio: 1.75;
 	padding: 15px;
-	border-radius: 3px;
-	background-color: white;
-	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+	border-radius: var(--radius-s);
+	background-color: var(--color-base-30);
+	box-shadow: 0px 10px 20px var(--background-modifier-border);
 	position: relative;
 	overflow: hidden;
 	flex-direction: row;
-	border: 0.25px solid silver;
+	border: 0.25px solid var(--color-base-35);
 }
 
 .contact-card:after {
@@ -44,7 +43,7 @@
     border-radius: 30%;
 	width: 190px;
 	height: 300px;
-	background: cadetblue;
+	background: var(--interactive-accent);
 	position: absolute;
 	animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
 }
@@ -56,22 +55,22 @@
 	position: relative;
 }
 .contact-card-logo {
-	border-radius: 5px;
+	border-radius: var(--radius-s);
 	height: 40px;
 	position: absolute;
 	top: 60%;
 	left: 10px;
-	background: white;
+	background-color: white;
 	padding: 4px;
 	z-index: 2;
 }
 .contact-card-info {
+    font-size: var(--font-ui-medium);
     position: relative;
     z-index: 2;
 	padding: 0px 0px 0px 20px;
 }
 .contact-card-info * {
-	color: #5a5a5a;
 	line-height: 1.2;
 	margin: 5px;
 }
@@ -80,12 +79,8 @@
 	height: 0.75rem;
 }
 .contact-card-name {
-	font-size: 1.8em;
+	font-size: var(--font-ui-large);
 	margin-bottom: 0px;
-}
-
-.contact-card-title {
-	margin-top: 0px;
 }
 
 .contact-card-separator {
@@ -95,8 +90,9 @@
 	display: none;
 }
 .contact-card-title {
-	font-size: 1.2em;
-	color: #009688;
+	margin-top: 0px;
+	font-size: var(--font-ui-medium);
+	color: var(--text-accent);
 	font-style: italic;
 }
 
@@ -108,6 +104,7 @@
 .contact-card a:visited,
 .contact-card a:active {
 	text-decoration: none;
+    color: inherit;
 }
 
 @keyframes animatop {
@@ -140,4 +137,8 @@
 		top: -24px;
 		left: -78px;
 	}
+}
+
+.theme-dark .contact-card-info svg {
+    filter: invert(100%);
 }
