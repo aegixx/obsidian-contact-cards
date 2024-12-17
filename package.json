@@ -1,6 +1,6 @@
 {
     "name": "obsidian-contact-cards",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Enables use of '@' mention syntax for any entity (People, Company, Project, etc).",
     "main": "main.js",
     "scripts": {
@@ -8,7 +8,12 @@
         "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
         "version": "node version-bump.mjs && git add manifest.json versions.json"
     },
-    "keywords": ["obsidian", "plugin", "contact", "codeblock"],
+    "keywords": [
+        "obsidian",
+        "plugin",
+        "contact",
+        "codeblock"
+    ],
     "author": "Bryan Stone <aegixx@gmail.com>",
     "license": "MIT",
     "devDependencies": {
