@@ -53,24 +53,11 @@ The `obsidian-contact-cards` plugin allows for several customizable settings to 
 
 ### Settings
 
-1. **HTML Template**
-   - **Description:** Provide the path to a custom HTML template to be used instead of the default card design. (Syntax follows the TemplaterThe fields should be provided using the Templater syntax (i.e. `{{name}}`).
-   - **Example:**
-
-     ```html
-     <div class="custom-contact-card">
-         <img src="{{photo_url}}" alt="Profile Photo">
-         <h1>{{name}}</h1>
-         <p>{{title}}</p>
-         <a href="mailto:{{email}}">{{email}}</a>
-     </div>
-     ```
-
-2. **Brandfetch Client ID**
+1. **Brandfetch Client ID**
    - **Description:** Company logos are retrieved using the email domain via the Brandfetch API. To use this API, you must register for a Client ID. This service is available free of charge.
    - **Note:** Register for your free Brandfetch API key [here](https://brandfetch.io/).
 
-3. **Default Country Code**
+2. **Default Country Code**
    - **Description:** This setting determines the country code used for phone number formatting. Provide the 2-letter country code (e.g., "GB" for the United Kingdom, "IN" for India)
    - **Default:** "US"
 
@@ -88,7 +75,6 @@ The `obsidian-contact-cards` plugin provides several customizable CSS classes to
 - **`.contact-card-name`** - The name of the contact.
 - **`.contact-card-title`** - The title/position of the contact.
 - **`.contact-card-separator`** - A separator between sections in the contact info (e.g., between name and company).
-- **`.contact-card-hidden`** - A utility class to hide elements.
 - **`.contact-card-error`** - Applied to elements displaying an error message.
 
 #### Animations
