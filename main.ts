@@ -3,7 +3,6 @@ import * as crypto from "crypto"
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 interface ContactCardsPluginSettings {
-    htmlTemplate?: string;
     brandfetchClientId?: string;
     defaultCountryCode: string
 }
@@ -163,17 +162,6 @@ class ContactCardsSettingTab extends PluginSettingTab {
         const { containerEl } = this;
 
         containerEl.empty();
-
-        new Setting(containerEl)
-            .setName('HTML template file')
-            .setDesc('Provide an HTML template to override the default look of rendered contact cards.')
-            .addText(text => text
-                .setPlaceholder('Example: templates/Contact')
-                .setValue(this.plugin.settings.htmlTemplate ?? '')
-                .onChange(async (value) => {
-                    this.plugin.settings.htmlTemplate = value;
-                    await this.plugin.saveSettings();
-                }));
 
         new Setting(containerEl)
             .setName('Brandfetch client ID')
