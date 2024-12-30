@@ -16,6 +16,8 @@ export default class ContactCardsPlugin extends Plugin {
     settings: ContactCardsPluginSettings;
 
     async onload() {
+        console.log(`Loading plugin: ${this.manifest.name} v${this.manifest.version}`);
+
         await this.loadSettings();
 
         // This adds a settings tab so the user can configure various aspects of the plugin
@@ -30,7 +32,7 @@ export default class ContactCardsPlugin extends Plugin {
     }
 
     onunload() {
-
+        console.log(`Unloading plugin: ${this.manifest.name} v${this.manifest.version}`);
     }
 
     async loadSettings() {
