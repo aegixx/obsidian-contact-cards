@@ -48,13 +48,13 @@
 	animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
 }
 
-.contact-card-photo {
+.contact-card-photo img {
 	border-radius: 50%;
 	width: 120px;
 	z-index: 1;
 	position: relative;
 }
-.contact-card-logo {
+.contact-card-company-logo img {
 	border-radius: var(--radius-s);
 	height: 40px;
 	position: absolute;
