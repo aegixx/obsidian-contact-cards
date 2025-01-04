@@ -4,6 +4,11 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 
 ![Example](example.gif)
 
+**NOTE:** This plugin utilizes third-party services:
+
+- Avatars are pulled from [Gravatar](https://gravatar.com/), based on email address.
+- Company logos retrieved from [Brandfetch](https://brandfetch.com), based on email domain.
+
 ## Features
 
 - **Beautiful Formatting**: Display name, title, company, email, and phone number in a clean, business-card style layout.
