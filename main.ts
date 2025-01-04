@@ -1,5 +1,4 @@
 import { App, MarkdownPostProcessorContext, parseYaml, Plugin, PluginSettingTab, Setting, TFile } from 'obsidian';
-import * as crypto from "crypto"
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 interface ContactCardsPluginSettings {
@@ -74,7 +73,8 @@ export default class ContactCardsPlugin extends Plugin {
             let photoUrl = contactData.photo_url;
             if (!photoUrl) {
                 // Only use Gravatar if a photo_url was not provided
-                const emailHash = emailDigest(contactData.email ?? '');
+                const email = contactData.email ?? '';
+                const emailHash = await sha256(email.trim().toLowerCase());
                 photoUrl = `https://gravatar.com/avatar/${emailHash}.jpg?s=120&d=mp`;
             }
             const linkedInUrl = `https://www.linkedin.com/search/results/people/?keywords=${contactData.name}`;
@@ -126,7 +126,7 @@ export default class ContactCardsPlugin extends Plugin {
                 phone.createEl('a', { title: 'Call Number', text: formattedPhone, attr: { href: `tel:${phoneUtil.getNationalSignificantNumber(phoneNum)}` } });
                 delete contactData.phone;
             }
-    
+
             // Clickable Location
             if (contactData.location) {
                 const location = info.createDiv({ cls: "contact-card-location" });
@@ -188,6 +188,11 @@ class ContactCardsSettingTab extends PluginSettingTab {
     }
 }
 
-function emailDigest(email: string): string {
-    return crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
+async function sha256(message: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    // Convert buffer to hex
+    const hashArray = [...new Uint8Array(hashBuffer)];
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
