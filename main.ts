@@ -90,7 +90,7 @@ export default class ContactCardsPlugin extends Plugin {
                     // Only use Brandfetch if a logo_url was not provided
                     logoUrl = `https://cdn.brandfetch.io/${emailDomain}/w/100/h/100?c=${this.settings.brandfetchClientId}`;
                 }
-                const companyLogo = card.createEl('a', { title: 'View Website', cls: 'contact-card-company-logo', attr: { href: `https://www.${emailDomain}` } });
+                const companyLogo = card.createEl('a', { title: 'View website', cls: 'contact-card-company-logo', attr: { href: `https://www.${emailDomain}` } });
                 companyLogo.createEl('img', { attr: { src: logoUrl } });
             }
             delete contactData.logo_url;
@@ -112,7 +112,7 @@ export default class ContactCardsPlugin extends Plugin {
             // Clickable Email
             if (contactData.email) {
                 const email = info.createDiv({ cls: "contact-card-email" });
-                email.createEl('a', { title: 'Send Email', text: contactData.email, attr: { href: `mailto:${contactData.email}` } });
+                email.createEl('a', { title: 'Send email', text: contactData.email, attr: { href: `mailto:${contactData.email}` } });
                 delete contactData.email;
             }
 
@@ -123,14 +123,14 @@ export default class ContactCardsPlugin extends Plugin {
                 const regionCode = phoneUtil.getRegionCodeForNumber(phoneNum);
                 const formattedPhone = phoneUtil.format(phoneNum, regionCode === null || regionCode === this.settings.defaultCountryCode ? PhoneNumberFormat.NATIONAL : PhoneNumberFormat.INTERNATIONAL);
                 const phone = info.createDiv({ cls: "contact-card-phone" });
-                phone.createEl('a', { title: 'Call Number', text: formattedPhone, attr: { href: `tel:${phoneUtil.getNationalSignificantNumber(phoneNum)}` } });
+                phone.createEl('a', { title: 'Call number', text: formattedPhone, attr: { href: `tel:${phoneUtil.getNationalSignificantNumber(phoneNum)}` } });
                 delete contactData.phone;
             }
 
             // Clickable Location
             if (contactData.location) {
                 const location = info.createDiv({ cls: "contact-card-location" });
-                location.createEl('a', { title: 'View on Map', text: contactData.location, attr: { href: `https://www.google.com/maps/place/${contactData.location}` } });
+                location.createEl('a', { title: 'View on map', text: contactData.location, attr: { href: `https://www.google.com/maps/place/${contactData.location}` } });
                 delete contactData.location;
             }
 
