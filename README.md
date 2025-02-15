@@ -15,9 +15,9 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 - **Simple Syntax**: Just provide a `contact-card` code block with YAML fields, and the plugin will handle the rest.
 - **Customizable**: Adjust styling by modifying the plugin’s CSS or by creating your own Obsidian CSS snippets.
 - **Powerful Integrations**:
-  - Photos automatically populated based on email address
-  - Company logos pulled based on email domain (when Company name is provided)
-  - Clickable fields for more context (phone, email, location, etc)
+    - Photos automatically populated based on email address
+    - Company logos pulled based on email domain (when Company name is provided)
+    - Clickable fields for more context (phone, email, location, etc)
 
 ## Attribution
 
@@ -38,7 +38,7 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 
 **Add a code block** to your note:
 
-```md
+````md
     ```contact-card
     name: Bryan Stone
     email: bryan@steampunk.dev
@@ -46,8 +46,8 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
     title: Founder & Managing Partner
     phone: 2565551234
     location: Madison, AL
-    ```    
-```
+    ```
+````
 
 **View the rendered card** in Reading/Preview mode:
 ![Sample Card](sample_card.png)
@@ -59,12 +59,13 @@ The `obsidian-contact-cards` plugin allows for several customizable settings to 
 ### Settings
 
 1. **Brandfetch Client ID**
-   - **Description:** Company logos are retrieved using the email domain via the Brandfetch API. To use this API, you must register for a Client ID. This service is available free of charge.
-   - **Note:** Register for your free Brandfetch API key [here](https://brandfetch.io/).
+
+    - **Description:** Company logos are retrieved using the email domain via the Brandfetch API. To use this API, you must register for a Client ID. This service is available free of charge.
+    - **Note:** Register for your free Brandfetch API key [here](https://brandfetch.io/).
 
 2. **Default Country Code**
-   - **Description:** This setting determines the country code used for phone number formatting. Provide the 2-letter country code (e.g., "GB" for the United Kingdom, "IN" for India)
-   - **Default:** "US"
+    - **Description:** This setting determines the country code used for phone number formatting. Provide the 2-letter country code (e.g., "GB" for the United Kingdom, "IN" for India)
+    - **Default:** "US"
 
 ### Styling
 
