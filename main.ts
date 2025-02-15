@@ -116,22 +116,38 @@ export default class ContactCardsPlugin extends Plugin {
 
 			// Company Logo
 			let logoUrl = contactData.logo_url;
-			if (logoUrl || contactData.company) {
-				const emailDomain = contactData.email
+			const domain =
+				contactData.domain ||
+				contactData.email
 					?.slice(contactData.email.indexOf("@") + 1)
 					.toLowerCase();
-				if (!logoUrl && emailDomain) {
-					// Only use Brandfetch if a logo_url was not provided
-					logoUrl = `https://cdn.brandfetch.io/${emailDomain}/w/100/h/100?c=${this.settings.brandfetchClientId}`;
+
+			if (!logoUrl && domain) {
+				if (this.settings.brandfetchClientId) {
+					// Primary logo source: Brandfetch
+					logoUrl = `https://cdn.brandfetch.io/${domain}/w/100/h/100?c=${this.settings.brandfetchClientId}`;
+				} else {
+					// Fallback sources if no Brandfetch API key
+					logoUrl = `https://logo.clearbit.com/${domain}`;
+					// logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`; // Alternative
 				}
+			}
+
+			if (logoUrl) {
 				const companyLogo = card.createEl("a", {
 					title: "View website",
 					cls: "contact-card-company-logo",
-					attr: { href: `https://www.${emailDomain}` },
+					attr: { href: `https://www.${domain}` },
 				});
-				companyLogo.createEl("img", { attr: { src: logoUrl } });
+				companyLogo.createEl("img", {
+					attr: {
+						src: logoUrl,
+						onerror: "this.style.display='none'", // Hide if logo fails to load
+					},
+				});
 			}
 			delete contactData.logo_url;
+			delete contactData.domain;
 
 			// Contact Details
 			const info = card.createDiv({ cls: "contact-card-info" });
