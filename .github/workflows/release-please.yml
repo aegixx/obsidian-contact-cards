@@ -34,7 +34,7 @@ jobs:
             - name: Checkout PR branch
               if: ${{ steps.release.outputs.pr }}
               env:
-                  PR_BRANCH: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+                  PR_BRANCH: ${{ fromJSON(steps.release.outputs.pr || '{}').headBranchName }}
               run: |
                   git fetch origin "$PR_BRANCH"
                   git checkout "$PR_BRANCH"
@@ -81,7 +81,7 @@ jobs:
               continue-on-error: true
               env:
                   GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-                  PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
+                  PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
               run: |
                   gh pr merge "$PR_NUMBER" \
                     --auto --squash --delete-branch \
