@@ -61,7 +61,7 @@ jobs:
                     console.log('Added versions.json entry:', manifest.version, '->', manifest.minAppVersion);
                   "
 
-                  trunk fmt --all --no-progress
+                  "$TRUNK_PATH" fmt --all --no-progress
 
                   npm install --package-lock-only
 
