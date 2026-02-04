@@ -1,0 +1,44 @@
+name: Release
+
+on:
+    workflow_call:
+        inputs:
+            tag:
+                description: Tag to build and release
+                required: true
+                type: string
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.tag }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build plugin
+              run: npm run build
+
+            - name: Upload release assets
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAG: ${{ inputs.tag }}
+              run: |
+                  gh release upload "$TAG" \
+                    main.js \
+                    manifest.json \
+                    styles.css \
+                    --repo "${{ github.repository }}" \
+                    --clobber

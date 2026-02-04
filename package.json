@@ -6,7 +6,6 @@
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"fmt": "trunk fmt --all",
 		"lint": "trunk check --all"
 	},
@@ -18,6 +17,10 @@
 	],
 	"author": "Bryan Stone <aegixx@gmail.com>",
 	"license": "MIT",
+	"overrides": {
+		"js-yaml": "4.1.1",
+		"brace-expansion": "1.1.12"
+	},
 	"devDependencies": {
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",

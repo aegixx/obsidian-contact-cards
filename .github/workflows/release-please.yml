@@ -1,0 +1,102 @@
+name: Release Please
+
+on:
+    push:
+        branches: [main]
+    workflow_dispatch: {}
+
+permissions:
+    contents: write
+    pull-requests: write
+
+concurrency:
+    group: ${{ github.workflow }}
+    cancel-in-progress: false
+
+jobs:
+    release-please:
+        runs-on: ubuntu-latest
+        outputs:
+            release_created: ${{ steps.release.outputs.release_created }}
+            tag_name: ${{ steps.release.outputs.tag_name }}
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+            - uses: googleapis/release-please-action@v4
+              id: release
+              with:
+                  token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+                  config-file: release-please-config.json
+                  manifest-file: .release-please-manifest.json
+
+            - name: Checkout PR branch
+              if: ${{ steps.release.outputs.pr }}
+              env:
+                  PR_BRANCH: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+              run: |
+                  git fetch origin "$PR_BRANCH"
+                  git checkout "$PR_BRANCH"
+
+            - name: Setup Node.js
+              if: ${{ steps.release.outputs.pr }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Update versions.json and lock file
+              if: ${{ steps.release.outputs.pr }}
+              run: |
+                  node -e "
+                    const fs = require('fs');
+                    const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
+                    const versions = JSON.parse(fs.readFileSync('versions.json', 'utf8'));
+                    versions[manifest.version] = manifest.minAppVersion;
+                    fs.writeFileSync('versions.json', JSON.stringify(versions, null, '\t') + '\n');
+                    console.log('Added versions.json entry:', manifest.version, '->', manifest.minAppVersion);
+                  "
+
+                  npm install --package-lock-only
+
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+                  CHANGED_FILES=""
+                  if ! git diff --quiet versions.json; then
+                    git add versions.json
+                    CHANGED_FILES="versions.json"
+                  fi
+                  if ! git diff --quiet package-lock.json; then
+                    git add package-lock.json
+                    if [ -n "$CHANGED_FILES" ]; then
+                      CHANGED_FILES="$CHANGED_FILES, "
+                    fi
+                    CHANGED_FILES="${CHANGED_FILES}package-lock.json"
+                  fi
+
+                  if [ -n "$CHANGED_FILES" ]; then
+                    git commit -m "chore: update ${CHANGED_FILES} for version bump"
+                    git push origin "$(git branch --show-current)"
+                  else
+                    echo "No additional changes needed"
+                  fi
+
+            - name: Enable auto-merge for release PR
+              if: ${{ steps.release.outputs.pr }}
+              continue-on-error: true
+              env:
+                  GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+                  PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
+              run: |
+                  gh pr merge "$PR_NUMBER" \
+                    --auto --squash --delete-branch \
+                    --repo "${{ github.repository }}"
+
+    build-release:
+        needs: release-please
+        if: ${{ needs.release-please.outputs.release_created }}
+        uses: ./.github/workflows/release.yml
+        secrets: inherit
+        with:
+            tag: ${{ needs.release-please.outputs.tag_name }}

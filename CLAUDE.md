@@ -4,15 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build & Development Commands
 
-| Command           | Description                                      |
-| ----------------- | ------------------------------------------------ |
-| `npm run dev`     | Build in watch mode (esbuild)                    |
-| `npm run build`   | Type-check (`tsc`) + production build (minified) |
-| `npm run version` | Bump version in manifest.json and versions.json  |
-| `npm run lint`    | Lint all files via Trunk (`trunk check --all`)   |
-| `npm run fmt`     | Format all files via Trunk (`trunk fmt --all`)   |
+| Command         | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `npm run dev`   | Build in watch mode (esbuild)                    |
+| `npm run build` | Type-check (`tsc`) + production build (minified) |
+| `npm run lint`  | Lint all files via Trunk (`trunk check --all`)   |
+| `npm run fmt`   | Format all files via Trunk (`trunk fmt --all`)   |
 
 No test suite exists. Validation is done through `tsc -noEmit` (part of `npm run build`) and Trunk linting.
+
+## CI/CD
+
+Automated via GitHub Actions (`.github/workflows/`):
+
+| Workflow             | Trigger                  | Purpose                                                    |
+| -------------------- | ------------------------ | ---------------------------------------------------------- |
+| `ci.yml`             | Pull requests            | Lint, typecheck, and build verification                    |
+| `release-please.yml` | Push to main             | Auto-generate changelog, bump versions, create release PRs |
+| `release.yml`        | Called by release-please | Build plugin and attach assets to GitHub Release           |
+
+Versioning is fully automated by [Release Please](https://github.com/googleapis/release-please). Use conventional commits (`feat:`, `fix:`, etc.) and releases are created automatically. Tags use no `v` prefix (Obsidian convention).
 
 ## Architecture
 
