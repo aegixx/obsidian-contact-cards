@@ -17,11 +17,11 @@ No test suite exists. Validation is done through `tsc -noEmit` (part of `npm run
 
 Automated via GitHub Actions (`.github/workflows/`):
 
-| Workflow             | Trigger           | Purpose                                                    |
-| -------------------- | ----------------- | ---------------------------------------------------------- |
-| `ci.yml`             | Pull requests     | Lint, typecheck, and build verification                    |
-| `release-please.yml` | Push to main      | Auto-generate changelog, bump versions, create release PRs |
-| `release.yml`        | Tag push / called | Build plugin and attach assets to GitHub Release           |
+| Workflow             | Trigger                  | Purpose                                                    |
+| -------------------- | ------------------------ | ---------------------------------------------------------- |
+| `ci.yml`             | Pull requests            | Lint, typecheck, and build verification                    |
+| `release-please.yml` | Push to main             | Auto-generate changelog, bump versions, create release PRs |
+| `release.yml`        | Called by release-please | Build plugin and attach assets to GitHub Release           |
 
 Versioning is fully automated by [Release Please](https://github.com/googleapis/release-please). Use conventional commits (`feat:`, `fix:`, etc.) and releases are created automatically. Tags use no `v` prefix (Obsidian convention).
 
