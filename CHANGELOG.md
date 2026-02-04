@@ -2,10 +2,9 @@
 
 ## [1.2.2](https://github.com/aegixx/obsidian-contact-cards/compare/1.2.1...1.2.2) (2026-02-04)
 
-
 ### Bug Fixes
 
-* guard fromJSON calls when release-please outputs no PR ([d4485c6](https://github.com/aegixx/obsidian-contact-cards/commit/d4485c6a62c85758e2c27eb35aa06e98cd4df104))
+- guard fromJSON calls when release-please outputs no PR ([d4485c6](https://github.com/aegixx/obsidian-contact-cards/commit/d4485c6a62c85758e2c27eb35aa06e98cd4df104))
 
 ## [1.2.1](https://github.com/aegixx/obsidian-contact-cards/compare/1.2.0...1.2.1) (2026-02-04)
 
