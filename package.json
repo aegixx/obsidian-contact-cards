@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-contact-cards",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Enables use of '@' mention syntax for any entity (People, Company, Project, etc).",
 	"main": "main.js",
 	"scripts": {
