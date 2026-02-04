@@ -52,6 +52,24 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 **View the rendered card** in Reading/Preview mode:
 ![Sample Card](sample_card.png)
 
+### Local Images
+
+You can use Obsidian wiki-link syntax to reference images from your vault for the contact photo or company logo:
+
+````md
+    ```contact-card
+    name: Bryan Stone
+    photo: [[headshot.png]]
+    logo: ![[company-logo.png]]
+    company: Steampunk Labs
+    title: Founder & Managing Partner
+    ```
+````
+
+Both `[[...]]` and `![[...]]` forms are supported. The plugin resolves the link to the corresponding file in your vault. If the linked file is not found, the field is silently ignored (falling back to Gravatar for photos, or Logo.dev for logos).
+
+The `photo` and `logo` fields are shorthand aliases for `photo_url` and `logo_url` respectively — you can use either form.
+
 ## Customization
 
 The `obsidian-contact-cards` plugin allows for several customizable settings to tailor the behavior and design of your contact cards. Below are the available options you can configure:
