@@ -1,10 +1,12 @@
 import {
 	App,
 	MarkdownPostProcessorContext,
+	parseLinktext,
 	parseYaml,
 	Plugin,
 	PluginSettingTab,
 	Setting,
+	TFile,
 } from "obsidian";
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
 
@@ -58,6 +60,28 @@ export default class ContactCardsPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
+	private resolveWikiLink(value: string, sourcePath: string): string | null {
+		if (typeof value !== "string") {
+			return null;
+		}
+		const match = value.match(/^!?\[\[(.+?)\]\]$/);
+		if (match) {
+			const { path } = parseLinktext(match[1]);
+			const file = this.app.metadataCache.getFirstLinkpathDest(
+				path,
+				sourcePath,
+			);
+			if (file instanceof TFile) {
+				return this.app.vault.getResourcePath(file);
+			}
+		}
+		return null;
+	}
+
+	private isWikiLink(value: unknown): boolean {
+		return typeof value === "string" && /^!?\[\[.+\]\]$/.test(value);
+	}
+
 	renderError(el: HTMLElement, error: unknown) {
 		let errorMsg = "Something went wrong";
 		if (error instanceof Error) {
@@ -90,6 +114,19 @@ export default class ContactCardsPlugin extends Plugin {
 				location: "Nowhere, OK",
 			};
 
+			// Normalize short aliases → canonical field names
+			if (contactData.photo && !contactData.photo_url) {
+				contactData.photo_url = contactData.photo;
+			}
+			delete contactData.photo;
+
+			if (contactData.logo && !contactData.logo_url) {
+				contactData.logo_url = contactData.logo;
+			}
+			delete contactData.logo;
+
+			const sourcePath = ctx.sourcePath;
+
 			const container = el.createDiv({ cls: "contact-card-container" });
 			const content = container.createDiv({
 				cls: "contact-card-content",
@@ -98,6 +135,15 @@ export default class ContactCardsPlugin extends Plugin {
 
 			// Contact Card Photo
 			let photoUrl = contactData.photo_url;
+			if (photoUrl) {
+				const resolved = this.resolveWikiLink(photoUrl, sourcePath);
+				if (resolved) {
+					photoUrl = resolved;
+				} else if (this.isWikiLink(photoUrl)) {
+					// Wiki-link syntax but file not found — fall through to Gravatar
+					photoUrl = null;
+				}
+			}
 			if (!photoUrl) {
 				// Only use Gravatar if a photo_url was not provided
 				const email = contactData.email ?? "";
@@ -115,6 +161,15 @@ export default class ContactCardsPlugin extends Plugin {
 
 			// Company Logo
 			let logoUrl = contactData.logo_url;
+			if (logoUrl) {
+				const resolved = this.resolveWikiLink(logoUrl, sourcePath);
+				if (resolved) {
+					logoUrl = resolved;
+				} else if (this.isWikiLink(logoUrl)) {
+					// Wiki-link syntax but file not found — fall through to Logo.dev
+					logoUrl = null;
+				}
+			}
 			const domain =
 				contactData.domain ||
 				contactData.email
