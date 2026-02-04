@@ -9,7 +9,6 @@ import {
 import { PhoneNumberFormat, PhoneNumberUtil } from "google-libphonenumber";
 
 interface ContactCardsPluginSettings {
-	brandfetchClientId?: string;
 	defaultCountryCode: string;
 }
 
@@ -123,14 +122,7 @@ export default class ContactCardsPlugin extends Plugin {
 					.toLowerCase();
 
 			if (!logoUrl && domain) {
-				if (this.settings.brandfetchClientId) {
-					// Primary logo source: Brandfetch
-					logoUrl = `https://cdn.brandfetch.io/${domain}/w/100/h/100?c=${this.settings.brandfetchClientId}`;
-				} else {
-					// Fallback sources if no Brandfetch API key
-					logoUrl = `https://logo.clearbit.com/${domain}`;
-					// logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`; // Alternative
-				}
+				logoUrl = `https://img.logo.dev/${domain}?token=pk_QNtlAfhuTuuuRvJhu03gDg`;
 			}
 
 			if (logoUrl) {
@@ -254,21 +246,6 @@ class ContactCardsSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName("Brandfetch client ID")
-			.setDesc(
-				"Provide your Brandfetch Client ID for retrieving company logos",
-			)
-			.addText((text) =>
-				text
-					.setPlaceholder("Brandfetch Client ID")
-					.setValue(this.plugin.settings.brandfetchClientId ?? "")
-					.onChange(async (value) => {
-						this.plugin.settings.brandfetchClientId = value;
-						await this.plugin.saveSettings();
-					}),
-			);
 
 		new Setting(containerEl)
 			.setName("Default country code")
