@@ -7,7 +7,7 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 **NOTE:** This plugin utilizes third-party services:
 
 - Avatars are pulled from [Gravatar](https://gravatar.com/), based on email address.
-- Company logos retrieved from [Brandfetch](https://brandfetch.com), based on email domain. (alternative: [Clearbit](https://clearbit.com))
+- Company logos retrieved from [Logo.dev](https://logo.dev), based on email domain.
 
 ## Features
 
@@ -23,7 +23,7 @@ The Obsidian Contact Cards Plugin transforms YAML data inside a special code blo
 
 - [Profile Card UI](https://codepen.io/genarocolusso/pen/xONEXg) by [Genaro Colusso](https://codepen.io/genarocolusso)
 - Profile photos from [Gravatar](https://gravatar.com/)
-- Company logos from [Brandfetch](https://brandfetch.com)
+- Company logos from [Logo.dev](https://logo.dev)
 - Vector graphics from [SVG Repo](https://www.svgrepo.com)
 
 ## Development
@@ -58,12 +58,7 @@ The `obsidian-contact-cards` plugin allows for several customizable settings to 
 
 ### Settings
 
-1. **Brandfetch Client ID**
-
-    - **Description:** Company logos are retrieved using the email domain via the Brandfetch API. To use this API, you must register for a Client ID. This service is available free of charge.
-    - **Note:** Register for your free Brandfetch API key [here](https://brandfetch.io/).
-
-2. **Default Country Code**
+1. **Default Country Code**
     - **Description:** This setting determines the country code used for phone number formatting. Provide the 2-letter country code (e.g., "GB" for the United Kingdom, "IN" for India)
     - **Default:** "US"
 
