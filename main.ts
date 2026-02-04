@@ -105,7 +105,12 @@ export default class ContactCardsPlugin extends Plugin {
 		ctx: MarkdownPostProcessorContext,
 	) {
 		try {
-			const contactData = parseYaml(source) ?? {
+			// Quote wiki-link values (e.g., ![[image.png]]) to prevent YAML tag parse errors
+			const sanitized = source.replace(
+				/(:\s*)(!?\[\[.+?\]\])\s*$/gm,
+				'$1"$2"',
+			);
+			const contactData = parseYaml(sanitized) ?? {
 				name: "John Doe",
 				title: "The Everyman",
 				company: "Acme Inc.",
