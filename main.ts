@@ -60,11 +60,20 @@ export default class ContactCardsPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
+	private static readonly WIKI_LINK_RE = /^!?\[\[(.+?)\]\]$/;
+
+	private isWikiLink(value: unknown): boolean {
+		return (
+			typeof value === "string" &&
+			ContactCardsPlugin.WIKI_LINK_RE.test(value)
+		);
+	}
+
 	private resolveWikiLink(value: string, sourcePath: string): string | null {
 		if (typeof value !== "string") {
 			return null;
 		}
-		const match = value.match(/^!?\[\[(.+?)\]\]$/);
+		const match = value.match(ContactCardsPlugin.WIKI_LINK_RE);
 		if (match) {
 			const { path } = parseLinktext(match[1]);
 			const file = this.app.metadataCache.getFirstLinkpathDest(
@@ -78,8 +87,20 @@ export default class ContactCardsPlugin extends Plugin {
 		return null;
 	}
 
-	private isWikiLink(value: unknown): boolean {
-		return typeof value === "string" && /^!?\[\[.+\]\]$/.test(value);
+	private resolveImageField(
+		value: string | null | undefined,
+		sourcePath: string,
+	): string | null | undefined {
+		if (!value) {
+			return value;
+		}
+		const resolved = this.resolveWikiLink(value, sourcePath);
+		if (resolved) {
+			return resolved;
+		} else if (this.isWikiLink(value)) {
+			return null;
+		}
+		return value;
 	}
 
 	renderError(el: HTMLElement, error: unknown) {
@@ -139,16 +160,10 @@ export default class ContactCardsPlugin extends Plugin {
 			const card = content.createDiv({ cls: "contact-card" });
 
 			// Contact Card Photo
-			let photoUrl = contactData.photo_url;
-			if (photoUrl) {
-				const resolved = this.resolveWikiLink(photoUrl, sourcePath);
-				if (resolved) {
-					photoUrl = resolved;
-				} else if (this.isWikiLink(photoUrl)) {
-					// Wiki-link syntax but file not found — fall through to Gravatar
-					photoUrl = null;
-				}
-			}
+			let photoUrl = this.resolveImageField(
+				contactData.photo_url,
+				sourcePath,
+			);
 			if (!photoUrl) {
 				// Only use Gravatar if a photo_url was not provided
 				const email = contactData.email ?? "";
@@ -165,16 +180,10 @@ export default class ContactCardsPlugin extends Plugin {
 			delete contactData.photo_url;
 
 			// Company Logo
-			let logoUrl = contactData.logo_url;
-			if (logoUrl) {
-				const resolved = this.resolveWikiLink(logoUrl, sourcePath);
-				if (resolved) {
-					logoUrl = resolved;
-				} else if (this.isWikiLink(logoUrl)) {
-					// Wiki-link syntax but file not found — fall through to Logo.dev
-					logoUrl = null;
-				}
-			}
+			let logoUrl = this.resolveImageField(
+				contactData.logo_url,
+				sourcePath,
+			);
 			const domain =
 				contactData.domain ||
 				contactData.email
