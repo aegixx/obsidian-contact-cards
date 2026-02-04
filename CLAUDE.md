@@ -46,9 +46,19 @@ This is an Obsidian plugin that renders YAML code blocks (fenced as `contact-car
 
 ### Contact Card Fields
 
-Standard fields with special handling: `name`, `email`, `phone`, `company`, `title`, `location`, `domain`, `photo_url`, `logo_url`. Any additional YAML keys render as generic key-value rows.
+Standard fields with special handling: `name`, `email`, `phone`, `company`, `title`, `location`, `domain`, `photo_url`, `logo_url`. Shorthand aliases `photo` and `logo` map to `photo_url` and `logo_url`. Any additional YAML keys render as generic key-value rows.
 
 Phone formatting uses `google-libphonenumber` with the configured default country code.
+
+### Wiki-Link Image Resolution
+
+The `photo_url` and `logo_url` fields support Obsidian wiki-link syntax (`[[image.png]]` or `![[image.png]]`). Key helpers:
+
+- **`WIKI_LINK_RE`** — Static regex matching both `[[...]]` and `![[...]]` forms.
+- **`resolveWikiLink()`** — Resolves a wiki-link to a vault resource path via `parseLinktext` and `metadataCache`.
+- **`resolveImageField()`** — Wraps resolution with fallback: resolved path, `null` if link is broken, or original value if not a wiki-link.
+
+YAML values like `![[image.png]]` are auto-quoted during parsing to prevent YAML tag errors.
 
 ### Rendering Approach
 
