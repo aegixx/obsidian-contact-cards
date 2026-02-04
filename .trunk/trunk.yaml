@@ -16,6 +16,10 @@ runtimes:
         - python@3.10.8
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
+    ignore:
+        - linters: [ALL]
+          paths:
+              - CHANGELOG.md
     enabled:
         - checkov@3.2.370
         - eslint@8.57.0
