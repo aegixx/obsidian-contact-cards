@@ -45,7 +45,11 @@ jobs:
               with:
                   node-version: 20
 
-            - name: Update versions.json and lock file
+            - name: Install dependencies
+              if: ${{ steps.release.outputs.pr }}
+              run: npm ci
+
+            - name: Update versions.json, format, and sync lock file
               if: ${{ steps.release.outputs.pr }}
               run: |
                   node -e "
@@ -57,29 +61,19 @@ jobs:
                     console.log('Added versions.json entry:', manifest.version, '->', manifest.minAppVersion);
                   "
 
+                  npx trunk fmt --all --no-progress
+
                   npm install --package-lock-only
 
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
 
-                  CHANGED_FILES=""
-                  if ! git diff --quiet versions.json; then
-                    git add versions.json
-                    CHANGED_FILES="versions.json"
-                  fi
-                  if ! git diff --quiet package-lock.json; then
-                    git add package-lock.json
-                    if [ -n "$CHANGED_FILES" ]; then
-                      CHANGED_FILES="$CHANGED_FILES, "
-                    fi
-                    CHANGED_FILES="${CHANGED_FILES}package-lock.json"
-                  fi
-
-                  if [ -n "$CHANGED_FILES" ]; then
-                    git commit -m "chore: update ${CHANGED_FILES} for version bump"
-                    git push origin "$(git branch --show-current)"
-                  else
+                  if git diff --quiet; then
                     echo "No additional changes needed"
+                  else
+                    git add -A
+                    git commit -m "chore: format, update versions.json and lock file"
+                    git push origin "$(git branch --show-current)"
                   fi
 
             - name: Enable auto-merge for release PR
