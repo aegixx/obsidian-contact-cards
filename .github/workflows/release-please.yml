@@ -45,9 +45,9 @@ jobs:
               with:
                   node-version: 20
 
-            - name: Install dependencies
+            - name: Install Trunk
               if: ${{ steps.release.outputs.pr }}
-              run: npm ci
+              uses: trunk-io/trunk-action/setup@v1
 
             - name: Update versions.json, format, and sync lock file
               if: ${{ steps.release.outputs.pr }}
@@ -61,7 +61,7 @@ jobs:
                     console.log('Added versions.json entry:', manifest.version, '->', manifest.minAppVersion);
                   "
 
-                  npx trunk fmt --all --no-progress
+                  trunk fmt --all --no-progress
 
                   npm install --package-lock-only
 
