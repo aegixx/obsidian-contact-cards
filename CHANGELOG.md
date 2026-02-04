@@ -2,17 +2,15 @@
 
 ## [1.3.0](https://github.com/aegixx/obsidian-contact-cards/compare/1.2.1...1.3.0) (2026-02-04)
 
-
 ### Features
 
-* support wiki-link syntax for local images ([1568b5b](https://github.com/aegixx/obsidian-contact-cards/commit/1568b5beba5dcf94e2c7cc01ac90af76718b121e))
-* support wiki-link syntax for local images ([1568b5b](https://github.com/aegixx/obsidian-contact-cards/commit/1568b5beba5dcf94e2c7cc01ac90af76718b121e))
-* support wiki-link syntax for local images in photo and logo fields ([798da0b](https://github.com/aegixx/obsidian-contact-cards/commit/798da0b00cc4f704d1daf7a4095b3a5937d6e747)), closes [#3](https://github.com/aegixx/obsidian-contact-cards/issues/3)
-
+- support wiki-link syntax for local images ([1568b5b](https://github.com/aegixx/obsidian-contact-cards/commit/1568b5beba5dcf94e2c7cc01ac90af76718b121e))
+- support wiki-link syntax for local images ([1568b5b](https://github.com/aegixx/obsidian-contact-cards/commit/1568b5beba5dcf94e2c7cc01ac90af76718b121e))
+- support wiki-link syntax for local images in photo and logo fields ([798da0b](https://github.com/aegixx/obsidian-contact-cards/commit/798da0b00cc4f704d1daf7a4095b3a5937d6e747)), closes [#3](https://github.com/aegixx/obsidian-contact-cards/issues/3)
 
 ### Bug Fixes
 
-* guard fromJSON calls when release-please outputs no PR ([d4485c6](https://github.com/aegixx/obsidian-contact-cards/commit/d4485c6a62c85758e2c27eb35aa06e98cd4df104))
+- guard fromJSON calls when release-please outputs no PR ([d4485c6](https://github.com/aegixx/obsidian-contact-cards/commit/d4485c6a62c85758e2c27eb35aa06e98cd4df104))
 
 ## [1.2.1](https://github.com/aegixx/obsidian-contact-cards/compare/1.2.0...1.2.1) (2026-02-04)
 
