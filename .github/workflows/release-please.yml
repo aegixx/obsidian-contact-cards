@@ -97,5 +97,6 @@ jobs:
         needs: release-please
         if: ${{ needs.release-please.outputs.release_created }}
         uses: ./.github/workflows/release.yml
+        secrets: inherit
         with:
             tag: ${{ needs.release-please.outputs.tag_name }}
